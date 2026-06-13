@@ -40,6 +40,10 @@ const { title, years, heading, cover } = entry.data;
   .detail__prose { margin-top: 28px; line-height: 1.75; }
   .detail__prose :global(h2) { margin-top: 24px; font-size: 16px; letter-spacing: 1px; text-transform: uppercase; }
   .detail__prose :global(p) { margin-top: 10px; }
+  .detail__prose :global(ul), .detail__prose :global(ol) { margin-top: 10px; padding-left: 1.2em; }
+  .detail__prose :global(li) { margin-top: 4px; }
+  .detail__prose :global(a) { text-decoration: underline; }
+  .detail__prose :global(strong) { font-weight: 600; }
   .detail__back { display: inline-block; margin-top: 40px; border: 1px solid var(--fg); border-radius: 999px; padding: 10px 24px; font-size: 13px; }
   .detail__back:hover { background: var(--fg); color: var(--bg); }
   @media (max-width: 768px) {
