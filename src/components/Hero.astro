@@ -1,0 +1,33 @@
+---
+const bio =
+  'Креативный лидер с 11+ годами опыта в разработке бренд-стратегий, 360-кампаний и web-продуктов. Экспертиза в iGaming, Affiliate, Telecom и FMCG. Выстраиваю бренды и цифровые продукты с нуля: от идеи и CJM до релиза и измеримого результата.';
+---
+<section id="hero" class="hero">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__overlay" aria-hidden="true"></div>
+  <div class="hero__content">
+    <img class="hero__avatar" src="/hero/avatar.webp" alt="Антон Малаховский" width="120" height="120" />
+    <h1 class="hero__name">Антон Малаховский</h1>
+    <p class="hero__role">creative team lead</p>
+    <p class="hero__tagline">digital | web | strategy</p>
+    <p class="hero__bio">{bio}</p>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; min-height: 100svh; display: grid; place-items: center; text-align: center; overflow: hidden; }
+  .hero__bg {
+    position: absolute; inset: 0;
+    background: #f3f0e8 url('/hero/main.webp') center/cover no-repeat;
+  }
+  .hero__overlay {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 35%, rgba(255,255,255,.55), rgba(255,255,255,.15) 60%);
+  }
+  .hero__content { position: relative; z-index: 1; padding: var(--space); max-width: 640px; }
+  .hero__avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 20px; border: 3px solid rgba(255,255,255,.9); box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+  .hero__name { font-size: clamp(28px, 6vw, 44px); font-weight: 600; letter-spacing: .5px; }
+  .hero__role { margin-top: 8px; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--fg); }
+  .hero__tagline { margin-top: 4px; font-size: 12px; letter-spacing: 2px; color: var(--muted); }
+  .hero__bio { margin-top: 18px; font-size: 14px; line-height: 1.7; color: var(--fg); }
+</style>

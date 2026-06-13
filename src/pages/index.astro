@@ -2,9 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import ContactsPopup from '../components/ContactsPopup.astro';
+import Hero from '../components/Hero.astro';
 ---
 <BaseLayout>
   <Header />
   <ContactsPopup />
-  <main style="height:120vh"></main>
+  <main>
+    <Hero />
+  </main>
 </BaseLayout>
