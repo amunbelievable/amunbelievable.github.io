@@ -5,7 +5,7 @@ const contacts = [
   { label: 'LinkedIn', value: 'anton-malakhovskiy', href: 'https://linkedin.com/in/anton-malakhovskiy-9452bb360' },
 ];
 ---
-<div id="contacts-popup" class="popup" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Контакты">
+<div id="contacts-popup" class="popup" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Контакты">
   <div class="popup__backdrop" data-close></div>
   <aside class="popup__panel">
     <button id="contacts-close" class="popup__close" data-close aria-label="Закрыть">×</button>
@@ -22,24 +22,35 @@ const contacts = [
 </div>
 
 <style>
-  .popup[hidden] { display: none; }
-  .popup { position: fixed; inset: 0; z-index: 100; }
-  .popup__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.25); }
+  .popup {
+    position: fixed; inset: 0; z-index: 100;
+    opacity: 0; visibility: hidden;
+    transition: opacity .35s ease, visibility 0s linear .35s;
+  }
+  .popup.is-open {
+    opacity: 1; visibility: visible;
+    transition: opacity .35s ease;
+  }
+  .popup__backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, .28); }
   .popup__panel {
     position: absolute; top: 0; right: 0; height: 100%; width: min(420px, 100%);
     background: var(--bg); padding: 48px var(--space);
-    box-shadow: -8px 0 40px rgba(0,0,0,.12);
-    transform: translateX(100%); transition: transform .4s ease;
+    box-shadow: -8px 0 40px rgba(0, 0, 0, .16);
+    transform: translateX(100%);
+    transition: transform .45s cubic-bezier(.22, .61, .36, 1);
     display: flex; flex-direction: column; gap: 24px;
   }
-  .popup:not([hidden]) .popup__panel { transform: none; }
+  .popup.is-open .popup__panel { transform: none; }
   .popup__close { align-self: flex-end; background: none; border: 0; font-size: 32px; line-height: 1; cursor: pointer; color: var(--fg); }
   .popup__title { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
   .popup__list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
   .popup__label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-  .popup__list a { font-size: 18px; border-bottom: 1px solid var(--fg); padding-bottom: 2px; }
+  .popup__list a { font-size: 18px; letter-spacing: .5px; text-transform: uppercase; border-bottom: 1px solid var(--fg); padding-bottom: 2px; word-break: break-word; }
   @media (max-width: 768px) {
     .popup__panel { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .popup, .popup__panel { transition: none; }
   }
 </style>
 
@@ -47,7 +58,7 @@ const contacts = [
   function closePopup() {
     const popup = document.getElementById('contacts-popup');
     if (!popup) return;
-    popup.hidden = true;
+    popup.classList.remove('is-open');
     popup.setAttribute('aria-hidden', 'true');
   }
 
@@ -56,7 +67,7 @@ const contacts = [
     const openBtn = document.getElementById('contacts-open');
     if (!popup || !openBtn) return;
 
-    const open = () => { popup.hidden = false; popup.setAttribute('aria-hidden', 'false'); };
+    const open = () => { popup.classList.add('is-open'); popup.setAttribute('aria-hidden', 'false'); };
 
     openBtn.addEventListener('click', open);
     popup.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', closePopup));

@@ -17,9 +17,12 @@
   .header__name { font-size: 14px; letter-spacing: 1px; }
   .header__contacts {
     background: none; border: 1px solid var(--fg); border-radius: 999px;
-    padding: 8px 20px; font-size: 13px; cursor: pointer; color: var(--fg);
+    padding: 8px 20px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; color: var(--fg);
     transition: background .2s ease, color .2s ease;
   }
   .header__contacts:hover { background: var(--fg); color: var(--bg); }
-  @media (max-width: 768px) { .header__name { display: none; } }
+  @media (max-width: 768px) {
+    .header__name { display: none; }
+    .header__inner { justify-content: flex-end; }
+  }
 </style>
