@@ -1,0 +1,65 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const cases = await getCollection('cases');
+  return cases.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, years, heading, cover } = entry.data;
+---
+<BaseLayout title={`${title} — Антон Малаховский`}>
+  <article class="detail">
+    <div class="detail__media">
+      {cover.type === 'video' ? (
+        <video src={cover.src} autoplay loop muted playsinline></video>
+      ) : (
+        <img src={cover.src} alt={title} />
+      )}
+    </div>
+    <div class="detail__body">
+      <p class="detail__years">{years}</p>
+      <h1 class="detail__title">{title}</h1>
+      <h2 class="detail__heading">{heading}</h2>
+      <div class="detail__prose"><Content /></div>
+      <a class="detail__back" href={`/#case-${entry.id}`} data-back={entry.id}>← Назад</a>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .detail { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space); max-width: var(--maxw); margin: 0 auto; padding: 88px var(--space) var(--space); align-items: start; }
+  .detail__media { position: sticky; top: 88px; border-radius: 10px; overflow: hidden; background: var(--line); }
+  .detail__media img, .detail__media video { width: 100%; height: auto; }
+  .detail__years { color: var(--muted); letter-spacing: 1px; }
+  .detail__title { font-size: clamp(28px, 4vw, 44px); font-weight: 600; margin-top: 6px; }
+  .detail__heading { font-size: 18px; font-weight: 500; color: var(--muted); margin-top: 8px; }
+  .detail__prose { margin-top: 28px; line-height: 1.75; }
+  .detail__prose :global(h2) { margin-top: 24px; font-size: 16px; letter-spacing: 1px; text-transform: uppercase; }
+  .detail__prose :global(p) { margin-top: 10px; }
+  .detail__prose :global(ul), .detail__prose :global(ol) { margin-top: 10px; padding-left: 1.2em; }
+  .detail__prose :global(li) { margin-top: 4px; }
+  .detail__prose :global(a) { text-decoration: underline; }
+  .detail__prose :global(strong) { font-weight: 600; }
+  .detail__back { display: inline-block; margin-top: 40px; border: 1px solid var(--fg); border-radius: 999px; padding: 10px 24px; font-size: 13px; }
+  .detail__back:hover { background: var(--fg); color: var(--bg); }
+  @media (max-width: 768px) {
+    .detail { grid-template-columns: 1fr; }
+    .detail__media { position: static; }
+  }
+</style>
+
+<script>
+  function rememberOnLeave() {
+    document.querySelectorAll('[data-back]').forEach((el) => {
+      el.addEventListener('click', () => {
+        const slug = (el as HTMLElement).dataset.back;
+        if (slug) sessionStorage.setItem('lastCase', slug);
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', rememberOnLeave);
+</script>

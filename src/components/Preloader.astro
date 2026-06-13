@@ -1,0 +1,64 @@
+---
+---
+<div id="preloader" class="preloader" aria-hidden="true">
+  <div class="preloader__inner">
+    <span class="preloader__label">Loading</span>
+    <div class="preloader__bar"><div id="preloader-fill" class="preloader__fill"></div></div>
+    <span id="preloader-pct" class="preloader__pct">0%</span>
+  </div>
+</div>
+
+<style>
+  .preloader { position: fixed; inset: 0; z-index: 200; background: #fff; display: grid; place-items: center; transition: opacity .5s ease; }
+  .preloader.is-done { opacity: 0; pointer-events: none; }
+  .preloader[hidden] { display: none; }
+  .preloader__inner { width: min(320px, 70vw); display: grid; gap: 12px; justify-items: start; }
+  .preloader__label { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #111; }
+  .preloader__bar { width: 100%; height: 2px; background: #e5e5e5; }
+  .preloader__fill { height: 100%; width: 0%; background: #111; transition: width .15s linear; }
+  .preloader__pct { font-size: 11px; color: #666; }
+  @media (prefers-reduced-motion: reduce) { .preloader { transition: none; } }
+</style>
+
+<script>
+  import { shouldShowPreloader } from '../lib/preloader';
+  import { resolveTargetCase } from '../lib/scroll-restore';
+
+  function restoreScroll() {
+    const target = resolveTargetCase(location.hash, sessionStorage.getItem('lastCase'));
+    if (!target) return;
+    const el = document.getElementById(`case-${target}`);
+    if (el) el.scrollIntoView({ behavior: 'auto' });
+    sessionStorage.removeItem('lastCase');
+  }
+
+  function runPreloader() {
+    const el = document.getElementById('preloader');
+    const fill = document.getElementById('preloader-fill');
+    const pct = document.getElementById('preloader-pct');
+    if (!el) return;
+
+    if (!shouldShowPreloader(sessionStorage.getItem('preloaderShown'))) {
+      el.hidden = true;
+      restoreScroll();
+      return;
+    }
+    sessionStorage.setItem('preloaderShown', '1');
+
+    let progress = 0;
+    const tick = () => {
+      progress = Math.min(100, progress + Math.random() * 12 + 4);
+      if (fill) (fill as HTMLElement).style.width = `${progress}%`;
+      if (pct) pct.textContent = `${Math.round(progress)}%`;
+      if (progress < 100) {
+        setTimeout(tick, 120);
+      } else {
+        el.classList.add('is-done');
+        setTimeout(() => { el.hidden = true; restoreScroll(); }, 500);
+      }
+    };
+    tick();
+  }
+
+  document.addEventListener('astro:page-load', runPreloader);
+</script>
