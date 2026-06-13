@@ -44,17 +44,28 @@ const contacts = [
 </style>
 
 <script>
+  function closePopup() {
+    const popup = document.getElementById('contacts-popup');
+    if (!popup) return;
+    popup.hidden = true;
+    popup.setAttribute('aria-hidden', 'true');
+  }
+
   function initContacts() {
     const popup = document.getElementById('contacts-popup');
     const openBtn = document.getElementById('contacts-open');
     if (!popup || !openBtn) return;
 
     const open = () => { popup.hidden = false; popup.setAttribute('aria-hidden', 'false'); };
-    const close = () => { popup.hidden = true; popup.setAttribute('aria-hidden', 'true'); };
 
     openBtn.addEventListener('click', open);
-    popup.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', close));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    popup.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', closePopup));
   }
+
+  // Document-level key handler: registered once at module load (does NOT re-run on navigations)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closePopup();
+  });
+
   document.addEventListener('astro:page-load', initContacts);
 </script>
