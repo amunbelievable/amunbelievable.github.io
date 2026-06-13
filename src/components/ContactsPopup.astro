@@ -1,0 +1,60 @@
+---
+const contacts = [
+  { label: 'E-mail', value: 'amunbelievable@gmail.com', href: 'mailto:amunbelievable@gmail.com' },
+  { label: 'Telegram', value: '@amunbelievable', href: 'https://t.me/amunbelievable' },
+  { label: 'LinkedIn', value: 'anton-malakhovskiy', href: 'https://linkedin.com/in/anton-malakhovskiy-9452bb360' },
+];
+---
+<div id="contacts-popup" class="popup" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Контакты">
+  <div class="popup__backdrop" data-close></div>
+  <aside class="popup__panel">
+    <button id="contacts-close" class="popup__close" data-close aria-label="Закрыть">×</button>
+    <h2 class="popup__title">Контакты</h2>
+    <ul class="popup__list">
+      {contacts.map((c) => (
+        <li>
+          <span class="popup__label">{c.label}</span>
+          <a href={c.href} target="_blank" rel="noopener noreferrer">{c.value}</a>
+        </li>
+      ))}
+    </ul>
+  </aside>
+</div>
+
+<style>
+  .popup[hidden] { display: none; }
+  .popup { position: fixed; inset: 0; z-index: 100; }
+  .popup__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.25); }
+  .popup__panel {
+    position: absolute; top: 0; right: 0; height: 100%; width: min(420px, 100%);
+    background: var(--bg); padding: 48px var(--space);
+    box-shadow: -8px 0 40px rgba(0,0,0,.12);
+    transform: translateX(100%); transition: transform .4s ease;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .popup:not([hidden]) .popup__panel { transform: none; }
+  .popup__close { align-self: flex-end; background: none; border: 0; font-size: 32px; line-height: 1; cursor: pointer; color: var(--fg); }
+  .popup__title { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+  .popup__list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+  .popup__label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .popup__list a { font-size: 18px; border-bottom: 1px solid var(--fg); padding-bottom: 2px; }
+  @media (max-width: 768px) {
+    .popup__panel { width: 100%; }
+  }
+</style>
+
+<script>
+  function initContacts() {
+    const popup = document.getElementById('contacts-popup');
+    const openBtn = document.getElementById('contacts-open');
+    if (!popup || !openBtn) return;
+
+    const open = () => { popup.hidden = false; popup.setAttribute('aria-hidden', 'false'); };
+    const close = () => { popup.hidden = true; popup.setAttribute('aria-hidden', 'true'); };
+
+    openBtn.addEventListener('click', open);
+    popup.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  }
+  document.addEventListener('astro:page-load', initContacts);
+</script>
