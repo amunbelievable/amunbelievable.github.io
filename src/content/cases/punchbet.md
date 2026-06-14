@@ -3,6 +3,7 @@ title: "PUNCH.BET"
 years: "2022 — 2024"
 order: 3
 heading: "Беттинг-бренд: айдентика и web-продукт с нуля"
+bg: "#F3E5AB"
 slides:
   - src: "/cases/punchbet/slide1.webp"
     type: "image"

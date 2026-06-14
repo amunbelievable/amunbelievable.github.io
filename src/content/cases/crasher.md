@@ -3,6 +3,7 @@ title: "CRASHER.MX"
 years: "2024 — 2025"
 order: 1
 heading: "Бренд-менеджмент выхода на Мексику"
+bg: "#003380"
 slides:
   - src: "/cases/crasher/cover.webp"
     type: "image"
