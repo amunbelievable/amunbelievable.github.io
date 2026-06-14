@@ -1,6 +1,7 @@
 ---
+const emailSubject = 'Предлагаем оффер на 300k в наносекунду';
 const contacts = [
-  { label: 'E-mail', value: 'amunbelievable@gmail.com', href: 'mailto:amunbelievable@gmail.com' },
+  { label: 'E-mail', value: 'amunbelievable@gmail.com', href: `mailto:amunbelievable@gmail.com?subject=${encodeURIComponent(emailSubject)}` },
   { label: 'Telegram', value: '@amunbelievable', href: 'https://t.me/amunbelievable' },
   { label: 'LinkedIn', value: 'anton-malakhovskiy', href: 'https://linkedin.com/in/anton-malakhovskiy-9452bb360' },
 ];
