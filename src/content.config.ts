@@ -16,6 +16,11 @@ const cases = defineCollection({
     years: z.string(),
     order: z.number(),
     heading: z.string(),
+    // Per-case colors (applied to both the list block and the detail page).
+    // bg: optional hex; defaults to white when unset.
+    // fg: optional 'black' | 'white'; when omitted it is auto-picked for contrast.
+    bg: z.string().regex(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/, 'bg must be a hex color, e.g. #101010').optional(),
+    fg: z.enum(['black', 'white']).optional(),
     // Banner slides shown on the detail page (one at a time, paginated).
     // The slide with the lowest `order` is the cover used in the case list.
     slides: z.array(slide).min(1),

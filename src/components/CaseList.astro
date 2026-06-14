@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { sortCases } from '../lib/cases';
+import { resolveCaseColors } from '../lib/colors';
 import CaseRow from './CaseRow.astro';
 
 const cases = sortCases(await getCollection('cases'));
@@ -12,9 +13,12 @@ const coverOf = (c) => {
 };
 ---
 <div id="cases" class="caselist">
-  {cases.map((c, i) => (
-    <CaseRow slug={c.id} title={c.data.title} years={c.data.years} cover={coverOf(c)} index={i} />
-  ))}
+  {cases.map((c) => {
+    const colors = resolveCaseColors(c.data.bg, c.data.fg);
+    return (
+      <CaseRow slug={c.id} title={c.data.title} years={c.data.years} cover={coverOf(c)} bg={colors.bg} fg={colors.fg} />
+    );
+  })}
 </div>
 
 <script>
