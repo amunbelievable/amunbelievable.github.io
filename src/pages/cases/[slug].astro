@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
@@ -8,23 +8,48 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
-const { title, years, heading, cover } = entry.data;
+const { title, years, heading, slides } = entry.data;
+const ordered = [...slides].sort((a, b) => a.order - b.order);
+const multi = ordered.length > 1;
 ---
 <BaseLayout title={`${title} — Антон Малаховский`}>
-  <article class="detail">
-    <div class="detail__media">
-      {cover.type === 'video' ? (
-        <video src={cover.src} autoplay loop muted playsinline></video>
-      ) : (
-        <img src={cover.src} alt={title} />
+  <article class="detail" data-carousel>
+    <div class="detail__left">
+      <div class="banner">
+        {ordered.map((s, i) => (
+          <div class:list={['banner__slide', { 'is-active': i === 0 }]} data-slide={i}>
+            {s.type === 'video' ? (
+              <video data-video src={s.src} loop muted playsinline preload="metadata"></video>
+            ) : (
+              <img src={s.src} alt={`${title} — ${i + 1}`} />
+            )}
+          </div>
+        ))}
+        {multi && (
+          <button class="banner__nav banner__nav--prev" data-prev type="button" aria-label="Предыдущий слайд">‹</button>
+        )}
+        {multi && (
+          <button class="banner__nav banner__nav--next" data-next type="button" aria-label="Следующий слайд">›</button>
+        )}
+      </div>
+      {multi && (
+        <div class="dots" aria-label="Навигация по слайдам">
+          {ordered.map((s, i) => (
+            <button class:list={['dot', { 'is-active': i === 0 }]} data-dot={i} type="button" aria-label={`Слайд ${i + 1}`}></button>
+          ))}
+        </div>
       )}
     </div>
+
     <div class="detail__body">
       <p class="detail__years">{years}</p>
       <h1 class="detail__title">{title}</h1>
       <h2 class="detail__heading">{heading}</h2>
-      <div class="detail__prose"><Content /></div>
+      <div class="detail__texts">
+        {ordered.map((s, i) => (
+          <div class:list={['detail__text', { 'is-active': i === 0 }]} data-text={i}>{s.text}</div>
+        ))}
+      </div>
       <a class="detail__back" href={`/#case-${entry.id}`} data-back={entry.id}>← Назад</a>
     </div>
   </article>
@@ -32,27 +57,92 @@ const { title, years, heading, cover } = entry.data;
 
 <style>
   .detail { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space); max-width: var(--maxw); margin: 0 auto; padding: 88px var(--space) var(--space); align-items: start; }
-  .detail__media { position: sticky; top: 88px; border-radius: 10px; overflow: hidden; background: var(--line); }
-  .detail__media img, .detail__media video { width: 100%; height: auto; }
+  .detail__left { position: sticky; top: 88px; }
+
+  .banner {
+    position: relative; width: 100%;
+    height: clamp(360px, 64vh, 620px);
+    border-radius: 10px; overflow: hidden; background: var(--line);
+  }
+  .banner__slide {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    opacity: 0; visibility: hidden; transition: opacity .4s ease;
+  }
+  .banner__slide.is-active { opacity: 1; visibility: visible; }
+  .banner__slide img, .banner__slide video { width: 100%; height: 100%; object-fit: contain; }
+
+  .banner__nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid var(--line); background: rgba(255, 255, 255, .85);
+    color: var(--fg); font-size: 22px; line-height: 1; cursor: pointer; z-index: 2;
+    display: grid; place-items: center;
+    transition: background .2s ease, color .2s ease;
+  }
+  .banner__nav:hover { background: var(--fg); color: var(--bg); }
+  .banner__nav--prev { left: 12px; }
+  .banner__nav--next { right: 12px; }
+
+  .dots { display: flex; justify-content: center; gap: 10px; margin-top: 16px; }
+  .dot { width: 9px; height: 9px; padding: 0; border-radius: 50%; border: 1px solid var(--fg); background: transparent; cursor: pointer; transition: background .2s ease; }
+  .dot.is-active { background: var(--fg); }
+
   .detail__years { color: var(--muted); letter-spacing: 1px; }
   .detail__title { font-size: clamp(28px, 4vw, 44px); font-weight: 600; margin-top: 6px; }
   .detail__heading { font-size: 18px; font-weight: 500; color: var(--muted); margin-top: 8px; }
-  .detail__prose { margin-top: 28px; line-height: 1.75; }
-  .detail__prose :global(h2) { margin-top: 24px; font-size: 16px; letter-spacing: 1px; text-transform: uppercase; }
-  .detail__prose :global(p) { margin-top: 10px; }
-  .detail__prose :global(ul), .detail__prose :global(ol) { margin-top: 10px; padding-left: 1.2em; }
-  .detail__prose :global(li) { margin-top: 4px; }
-  .detail__prose :global(a) { text-decoration: underline; }
-  .detail__prose :global(strong) { font-weight: 600; }
+  .detail__texts { margin-top: 28px; }
+  .detail__text { display: none; white-space: pre-line; line-height: 1.75; }
+  .detail__text.is-active { display: block; }
   .detail__back { display: inline-block; margin-top: 40px; border: 1px solid var(--fg); border-radius: 999px; padding: 10px 24px; font-size: 13px; }
   .detail__back:hover { background: var(--fg); color: var(--bg); }
+
   @media (max-width: 768px) {
     .detail { grid-template-columns: 1fr; }
-    .detail__media { position: static; }
+    .detail__left { position: static; }
+    .banner { height: clamp(320px, 80vw, 520px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .banner__slide { transition: none; }
   }
 </style>
 
 <script>
+  function initCarousel() {
+    const root = document.querySelector('[data-carousel]');
+    if (!root) return;
+    const slides = Array.from(root.querySelectorAll('.banner__slide'));
+    const texts = Array.from(root.querySelectorAll('.detail__text'));
+    const dots = Array.from(root.querySelectorAll('[data-dot]'));
+    const total = slides.length;
+    if (!total) return;
+
+    let idx = 0;
+    function show(n) {
+      idx = ((n % total) + total) % total;
+      slides.forEach((s, i) => {
+        const active = i === idx;
+        s.classList.toggle('is-active', active);
+        const v = s.querySelector('video');
+        if (v) {
+          if (active) { v.play().catch(() => {}); }
+          else { v.pause(); try { v.currentTime = 0; } catch {} }
+        }
+      });
+      texts.forEach((t, i) => t.classList.toggle('is-active', i === idx));
+      dots.forEach((d, i) => {
+        const active = i === idx;
+        d.classList.toggle('is-active', active);
+        d.setAttribute('aria-current', active ? 'true' : 'false');
+      });
+    }
+
+    root.querySelector('[data-prev]')?.addEventListener('click', () => show(idx - 1));
+    root.querySelector('[data-next]')?.addEventListener('click', () => show(idx + 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
+
+    show(0);
+  }
+
   function rememberOnLeave() {
     document.querySelectorAll('[data-back]').forEach((el) => {
       el.addEventListener('click', () => {
@@ -61,5 +151,7 @@ const { title, years, heading, cover } = entry.data;
       });
     });
   }
+
+  document.addEventListener('astro:page-load', initCarousel);
   document.addEventListener('astro:page-load', rememberOnLeave);
 </script>

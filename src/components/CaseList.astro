@@ -4,10 +4,16 @@ import { sortCases } from '../lib/cases';
 import CaseRow from './CaseRow.astro';
 
 const cases = sortCases(await getCollection('cases'));
+
+// Cover for the list = the slide with the lowest `order` (the featured one).
+const coverOf = (c) => {
+  const first = [...c.data.slides].sort((a, b) => a.order - b.order)[0];
+  return { type: first.type, src: first.src };
+};
 ---
 <div id="cases" class="caselist">
   {cases.map((c) => (
-    <CaseRow slug={c.id} title={c.data.title} years={c.data.years} cover={c.data.cover} />
+    <CaseRow slug={c.id} title={c.data.title} years={c.data.years} cover={coverOf(c)} />
   ))}
 </div>
 

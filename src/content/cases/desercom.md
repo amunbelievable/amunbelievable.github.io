@@ -2,14 +2,15 @@
 title: "DESERCOM"
 years: "20XX"
 order: 2
-cover:
-  type: "video"
-  src: "/cases/desercom/cover.webm"
 heading: "Краткое описание кейса (плейсхолдер)"
+slides:
+  - src: "/cases/desercom/cover.webm"
+    type: "video"
+    order: 1
+    text: |
+      Задача
+      Плейсхолдер — заполнить.
+
+      Решение
+      Плейсхолдер — заполнить.
 ---
-
-## Задача
-_Плейсхолдер — заполнить._
-
-## Решение
-_Плейсхолдер — заполнить._
