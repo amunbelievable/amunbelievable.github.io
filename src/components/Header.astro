@@ -10,12 +10,8 @@
 <style>
   .header {
     position: sticky; top: 0; z-index: 50;
-    background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+    background: rgba(255,255,255,.85); backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--line);
-  }
-  /* Telegram / WebViews render backdrop-filter poorly — fall back to solid white. */
-  @supports not ((backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px))) {
-    .header { background: #fff; }
   }
   .header__inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
   .header__name { font-size: 14px; letter-spacing: 1px; }
