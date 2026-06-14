@@ -5,11 +5,11 @@ import '../styles/global.css';
 interface Props { title?: string; description?: string; }
 const {
   title = 'Anton Malakhovskiy',
-  description = 'Senor Creator & Brand Manager portfolio',
+  description = 'Senior Creator & Brand Manager portfolio',
 } = Astro.props;
 
 // Absolute URL for OG image (falls back gracefully if site is unset)
-const ogImage = Astro.site ? new URL('/hero/main.webp', Astro.site).href : '/hero/main.webp';
+const ogImage = Astro.site ? new URL('/favicon.png', Astro.site).href : '/favicon.png';
 const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
 ---
 <!doctype html>
