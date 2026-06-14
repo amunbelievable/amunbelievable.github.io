@@ -61,7 +61,7 @@ const multi = ordered.length > 1;
 
   .banner {
     position: relative; width: 100%;
-    height: clamp(360px, 64vh, 620px);
+    height: clamp(420px, 75vh, 720px);
     border-radius: 10px; overflow: hidden; background: var(--line);
   }
   .banner__slide {
@@ -102,7 +102,7 @@ const multi = ordered.length > 1;
   @media (max-width: 768px) {
     .detail { grid-template-columns: 1fr; }
     .detail__left { position: static; }
-    .banner { height: clamp(320px, 80vw, 520px); }
+    .banner { height: clamp(380px, 94vw, 600px); }
   }
   @media (prefers-reduced-motion: reduce) {
     .banner__slide { transition: none; }
