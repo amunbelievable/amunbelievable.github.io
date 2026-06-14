@@ -10,4 +10,8 @@ favicon/
 .claude
 docs/
 requirements.md
-telegram-cloud-photo-*.jpg
+
+# Dropped screenshots / images in the repo root (real assets live in public/)
+/*.png
+/*.jpg
+/*.jpeg
