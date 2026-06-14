@@ -33,7 +33,7 @@ const { slug, title, years, cover, bg, fg } = Astro.props;
   .case__link { display: grid; grid-template-columns: 1fr minmax(0, 2fr) 1fr; align-items: center; gap: 32px; width: 100%; max-width: var(--maxw); }
   .case__title { font-size: clamp(20px, 3vw, 32px); font-weight: 600; }
   .case__years { text-align: right; color: var(--case-fg, #111); opacity: .55; letter-spacing: 1px; }
-  .case__media { aspect-ratio: 16 / 25; width: 100%; max-width: 380px; margin: 0 auto; overflow: hidden; border-radius: 10px; background: color-mix(in srgb, var(--case-fg, #111) 10%, transparent); }
+  .case__media { aspect-ratio: 16 / 25; width: 100%; max-width: 380px; max-height: calc(100svh - 260px); margin: 0 auto; overflow: hidden; border-radius: 10px; background: color-mix(in srgb, var(--case-fg, #111) 10%, transparent); }
   .case__media img, .case__media video { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
   .case__link:hover .case__media img, .case__link:hover .case__media video { transform: scale(1.03); }
   @media (max-width: 768px) {
