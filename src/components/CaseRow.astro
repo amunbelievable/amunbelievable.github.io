@@ -4,10 +4,13 @@ interface Props {
   title: string;
   years: string;
   cover: { type: 'image' | 'video'; src: string };
+  index: number;
 }
-const { slug, title, years, cover } = Astro.props;
+const { slug, title, years, cover, index } = Astro.props;
+// Checkerboard backgrounds: even index light, odd index dark.
+const dark = index % 2 === 1;
 ---
-<section class="case" id={`case-${slug}`} data-slug={slug}>
+<section class:list={['case', { 'case--dark': dark }]} id={`case-${slug}`} data-slug={slug}>
   <a class="case__link reveal" href={`/cases/${slug}`} data-case-link={slug}>
     <span class="case__title">{title}</span>
     <span class="case__media">
@@ -22,7 +25,10 @@ const { slug, title, years, cover } = Astro.props;
 </section>
 
 <style>
-  .case { min-height: 100svh; scroll-snap-align: start; display: grid; place-items: center; padding: 88px var(--space) var(--space); }
+  .case { min-height: 100svh; scroll-snap-align: start; display: grid; place-items: center; padding: 88px var(--space) var(--space); transition: background-color .3s ease; }
+  .case--dark { background: #101010; color: #fff; }
+  .case--dark .case__years { color: rgba(255, 255, 255, .55); }
+  .case--dark .case__media { background: #1c1c1c; }
   .case__link { display: grid; grid-template-columns: 1fr minmax(0, 2fr) 1fr; align-items: center; gap: 32px; width: 100%; max-width: var(--maxw); }
   .case__title { font-size: clamp(20px, 3vw, 32px); font-weight: 600; }
   .case__years { text-align: right; color: var(--muted); letter-spacing: 1px; }

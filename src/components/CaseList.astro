@@ -12,8 +12,8 @@ const coverOf = (c) => {
 };
 ---
 <div id="cases" class="caselist">
-  {cases.map((c) => (
-    <CaseRow slug={c.id} title={c.data.title} years={c.data.years} cover={coverOf(c)} />
+  {cases.map((c, i) => (
+    <CaseRow slug={c.id} title={c.data.title} years={c.data.years} cover={coverOf(c)} index={i} />
   ))}
 </div>
 
