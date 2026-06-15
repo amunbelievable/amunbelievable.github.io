@@ -5,7 +5,7 @@ order: 3
 heading: "Релиз и продвижение нового welcome-бонуса"
 bg: "#0b9472"
 slides:
-   - src: "/cases/punchbetwb/slide2.webp"
+  - src: "/cases/punchbetwb/slide2.webp"
     type: "image"
     order: 1
     text: |
