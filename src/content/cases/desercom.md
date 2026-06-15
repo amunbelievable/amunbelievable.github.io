@@ -20,7 +20,7 @@ slides:
       
       ИТОГ: 
       повышение конверсии HR-откликов на 120% и заявок на партнерство на 78%.
-  - src: "/cases/desercom/dsrcm01.webm"
+  - src: "/cases/desercom/dsrcm001.webm"
     type: "video"
     order: 2
     text: |
@@ -35,7 +35,7 @@ slides:
       
       ИТОГ: 
       повышение конверсии HR-откликов на 120% и заявок на партнерство на 78%.
-  - src: "/cases/desercom/dsrcm02.webm"
+  - src: "/cases/desercom/dsrcm002.webm"
     type: "video"
     order: 3
     text: |
