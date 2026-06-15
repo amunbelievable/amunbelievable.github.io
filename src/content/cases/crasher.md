@@ -1,7 +1,7 @@
 ---
 title: "CRASHER.MX"
 years: "2024 — 2025"
-order: 1
+order: 2
 heading: "Бренд-менеджмент выхода на Мексику"
 bg: "#003380"
 slides:
