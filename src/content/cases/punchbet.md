@@ -3,9 +3,9 @@ title: "PUNCH.BET"
 years: "Айдентика бренда"
 order: 2
 heading: "Создание айдентики нового продукта и курирование разработки"
-bg: "#F3E5AB"
+bg: "#CCFF66"
 slides:
-  - src: "/cases/punchbet/slide1.webp"
+  - src: "/cases/punchbet/pi1.webp"
     type: "image"
     order: 2
     text: |
