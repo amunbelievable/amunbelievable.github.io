@@ -1,7 +1,7 @@
 ---
 title: "CHAMPIONSLOTS"
 years: "Спорт-бонусы"
-order: 5
+order: 6
 heading: "Разработка спорт-бонусов казино"
 bg: "#000000"
 slides:
