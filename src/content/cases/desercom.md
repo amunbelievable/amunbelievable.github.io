@@ -5,8 +5,8 @@ order: 1
 heading: "Концепт «Медиабаинг нового поколения»"
 bg: "#101010"
 slides:
-  - src: "/cases/desercom/dsrcm0.webm"
-    type: "video"
+  - src: "/cases/desercom/dsrcm_intro.webp"
+    type: "image"
     order: 1
     text: |
       ЗАДАЧА: 
