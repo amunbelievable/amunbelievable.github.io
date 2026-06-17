@@ -35,7 +35,7 @@ slides:
 
       ИТОГ:
       бренд набрал 20,000 активных пользователей за 1й год работы.
-  - src: "/cases/punchbet/punch07.webp"
+  - src: "/cases/punchbet/punch10.webp"
     type: "image"
     order: 3
     text: |
