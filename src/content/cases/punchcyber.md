@@ -3,7 +3,7 @@ title: "PUNCH.BET"
 years: "Киберспортивный дизайн"
 order: 4
 heading: "Брендинг раздела ставок на киберспорт: продукт, баннеры, перфоманс"
-bg: "#003380"
+bg: "#FF683A"
 slides:
   - src: "/cases/punchcyber/punchcyber0.webp"
     type: "image"
