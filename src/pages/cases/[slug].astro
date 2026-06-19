@@ -18,6 +18,11 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
 <BaseLayout title={`${title} — Антон Малаховский`}>
   <div class="detail-page" style={`--case-bg:${colors.bg};--case-fg:${colors.fg};`}>
   <article class="detail" data-carousel>
+    <div class="detail__head">
+      <p class="detail__years">{years}</p>
+      <h1 class="detail__title">{title}</h1>
+    </div>
+
     <div class="detail__left">
       <div class="banner">
         {ordered.map((s, i) => (
@@ -46,8 +51,6 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
     </div>
 
     <div class="detail__body">
-      <p class="detail__years">{years}</p>
-      <h1 class="detail__title">{title}</h1>
       <h2 class="detail__heading">{heading}</h2>
       <div class="detail__texts">
         {ordered.map((s, i) => (
@@ -66,8 +69,15 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
     background: var(--case-bg, #fff); color: var(--case-fg, #111);
     transition: background-color .3s ease, color .3s ease;
   }
-  .detail { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space); max-width: var(--maxw); margin: 0 auto; padding: 88px var(--space) var(--space); align-items: start; }
-  .detail__left { position: sticky; top: 88px; }
+  .detail {
+    display: grid; grid-template-columns: 1fr 1fr;
+    grid-template-areas: "media head" "media body";
+    gap: 12px var(--space); max-width: var(--maxw); margin: 0 auto;
+    padding: 88px var(--space) var(--space); align-items: start;
+  }
+  .detail__head { grid-area: head; }
+  .detail__left { grid-area: media; position: sticky; top: 88px; }
+  .detail__body { grid-area: body; }
 
   .banner {
     position: relative; width: 100%; max-width: 440px; margin: 0 auto;
@@ -111,7 +121,7 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
   .detail__back:hover { background: var(--case-fg, #111); color: var(--case-bg, #fff); }
 
   @media (max-width: 768px) {
-    .detail { grid-template-columns: 1fr; padding-top: 72px; }
+    .detail { grid-template-columns: 1fr; grid-template-areas: "head" "media" "body"; padding-top: 72px; }
     .detail__left { position: static; }
     /* Shrink the banner ~10% (aspect-ratio preserved) so the now-present sticky header doesn't crop it. */
     .banner { width: 90%; }
