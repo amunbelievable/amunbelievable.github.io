@@ -1,6 +1,7 @@
 ---
 title: "FIRSTCLASS PARTNERS"
 years: "Айдентика и релиз стартапа"
+casetype: "#branding #igaming #webdesign #web-product #strategy"
 order: 6
 heading: "Концепция «Твой первоклассный партнер»"
 bg: "#004AE8"

@@ -1,8 +1,12 @@
 ---
+const base = import.meta.env.BASE_URL;
 ---
 <header class="header">
   <div class="header__inner container">
-    <span class="header__name">Антон Малаховский</span>
+    <a class="header__home" href={base} data-home aria-label="На главную, к разделу hero">
+      <img class="header__logo" src={`${base}favicon.png`} alt="Антон Малаховский" width="32" height="32" />
+      <span class="header__name">Антон Малаховский</span>
+    </a>
     <button id="contacts-open" class="header__contacts" type="button">Контакты</button>
   </div>
 </header>
@@ -14,6 +18,8 @@
     border-bottom: 1px solid var(--line);
   }
   .header__inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .header__home { display: inline-flex; align-items: center; gap: 10px; }
+  .header__logo { display: none; width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
   .header__name { font-size: 14px; letter-spacing: 1px; }
   .header__contacts {
     background: none; border: 1px solid var(--fg); border-radius: 999px;
@@ -23,6 +29,41 @@
   .header__contacts:hover { background: var(--fg); color: var(--bg); }
   @media (max-width: 768px) {
     .header__name { display: none; }
-    .header__inner { justify-content: flex-end; }
+    .header__logo { display: block; }
   }
 </style>
+
+<script>
+  // Unified "go to hero / top" used by the header home link ([data-home]) and the
+  // footer "Наверх" button ([data-scroll-top]).
+  // Fixes the bug where a lingering "#case-…" hash (left after pressing Назад)
+  // kept pulling the page back: we clear the hash and scroll to the very top,
+  // which avoids scroll-snap fighting scrollIntoView.
+  function goHero(e: Event) {
+    sessionStorage.removeItem('lastCase');
+    const hero = document.getElementById('hero');
+    if (!hero) return; // detail page: let the href navigate home (lastCase cleared → lands on hero)
+    e.preventDefault();
+    history.replaceState(null, '', location.pathname + location.search);
+    // Temporarily disable scroll-snap: mandatory snap otherwise interrupts the
+    // programmatic smooth scroll partway. Restore it once scrolling settles.
+    const root = document.documentElement;
+    const prev = root.style.scrollSnapType;
+    root.style.scrollSnapType = 'none';
+    const restore = () => {
+      root.style.scrollSnapType = prev;
+      window.removeEventListener('scrollend', restore);
+    };
+    window.addEventListener('scrollend', restore);
+    window.setTimeout(restore, 1200); // fallback for browsers without scrollend
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function initHome() {
+    document.querySelectorAll('[data-home], [data-scroll-top]').forEach((el) => {
+      el.addEventListener('click', goHero);
+    });
+  }
+
+  document.addEventListener('astro:page-load', initHome);
+</script>

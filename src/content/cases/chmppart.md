@@ -1,6 +1,7 @@
 ---
 title: "CHAMPION PARTNERS"
 years: "Ребрендинг продукта"
+casetype: "#branding #igaming #webdesign #web-product #strategy"
 order: 3
 heading: "Новая айдентика и слоган официальной партнерки ChampionSlots"
 bg: "#EFC0FF"

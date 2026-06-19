@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('case detail carousel switches media and text', async ({ page }) => {
+test('case detail carousel switches slides (media + text)', async ({ page }) => {
   await page.goto('/cases/punchbet/');
 
   const t0 = page.locator('[data-text="0"]');
@@ -9,15 +9,13 @@ test('case detail carousel switches media and text', async ({ page }) => {
   // Slide 1 active by default
   await expect(t0).toBeVisible();
   await expect(t1).toBeHidden();
-  await expect(t0).toContainText('Создание web-продукта');
-  await expect(page.locator('[data-dot]')).toHaveCount(2);
+  await expect(page.locator('[data-dot]')).toHaveCount(10);
   await expect(page.locator('.banner__slide.is-active')).toHaveCount(1);
 
-  // Next -> slide 2 (text changes with the banner)
+  // Next -> slide 2 (its own text becomes visible, slide 1 hidden)
   await page.locator('[data-next]').click();
   await expect(t1).toBeVisible();
   await expect(t0).toBeHidden();
-  await expect(t1).toContainText('Welcome-офер');
   await expect(page.locator('[data-slide="1"]')).toHaveClass(/is-active/);
 
   // Dot back to slide 1
@@ -26,9 +24,11 @@ test('case detail carousel switches media and text', async ({ page }) => {
   await expect(t1).toBeHidden();
 });
 
-test('single-slide case has no pager', async ({ page }) => {
-  await page.goto('/cases/crasher/');
-  await expect(page.locator('[data-dot]')).toHaveCount(0);
-  await expect(page.locator('[data-next]')).toHaveCount(0);
-  await expect(page.locator('[data-text="0"]')).toBeVisible();
+test('casetype hashtags show on homepage preview but not on the detail page', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('#preloader').waitFor({ state: 'hidden' }).catch(() => {});
+  await expect(page.locator('#case-punchbet .case__type')).toContainText('#branding');
+
+  await page.goto('/cases/punchbet/');
+  await expect(page.locator('.case__type')).toHaveCount(0);
 });

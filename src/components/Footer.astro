@@ -9,14 +9,3 @@
   .footer__top { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; border: 1px solid var(--fg); border-radius: 999px; padding: 10px 24px; transition: background .2s, color .2s; }
   .footer__top:hover { background: var(--fg); color: var(--bg); }
 </style>
-
-<script>
-  function initTop() {
-    const btn = document.querySelector('[data-scroll-top]');
-    btn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
-    });
-  }
-  document.addEventListener('astro:page-load', initTop);
-</script>

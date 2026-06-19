@@ -3,23 +3,27 @@ interface Props {
   slug: string;
   title: string;
   years: string;
+  casetype?: string;
   cover: { type: 'image' | 'video'; src: string };
   bg: string;
   fg: string;
 }
-const { slug, title, years, cover, bg, fg } = Astro.props;
+const { slug, title, years, casetype, cover, bg, fg } = Astro.props;
 ---
 <section class="case" id={`case-${slug}`} data-slug={slug} style={`--case-bg:${bg};--case-fg:${fg};`}>
   <a class="case__link reveal" href={`/cases/${slug}`} data-case-link={slug}>
-    <span class="case__title">{title}</span>
-    <span class="case__media">
-      {cover.type === 'video' ? (
-        <video src={cover.src} autoplay loop muted playsinline></video>
-      ) : (
-        <img src={cover.src} alt={title} loading="lazy" />
-      )}
-    </span>
-    <span class="case__years">{years}</span>
+    <div class="case__row">
+      <span class="case__title">{title}</span>
+      <span class="case__media">
+        {cover.type === 'video' ? (
+          <video src={cover.src} autoplay loop muted playsinline></video>
+        ) : (
+          <img src={cover.src} alt={title} loading="lazy" />
+        )}
+      </span>
+      <span class="case__years">{years}</span>
+    </div>
+    {casetype && <div class="case__type">{casetype}</div>}
   </a>
 </section>
 
@@ -30,14 +34,21 @@ const { slug, title, years, cover, bg, fg } = Astro.props;
     background: var(--case-bg, #fff); color: var(--case-fg, #111);
     transition: background-color .3s ease, color .3s ease;
   }
-  .case__link { display: grid; grid-template-columns: 1fr minmax(0, 2fr) 1fr; align-items: center; gap: 32px; width: 100%; max-width: var(--maxw); }
+  .case__link { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; max-width: var(--maxw); }
+  .case__row { display: grid; grid-template-columns: 1fr minmax(0, 2fr) 1fr; align-items: center; gap: 32px; width: 100%; }
   .case__title { font-size: clamp(20px, 3vw, 32px); font-weight: 600; }
   .case__years { text-align: right; color: var(--case-fg, #111); opacity: .55; letter-spacing: 1px; }
   .case__media { aspect-ratio: 16 / 25; width: 100%; max-width: 380px; margin: 0 auto; overflow: hidden; border-radius: 10px; background: color-mix(in srgb, var(--case-fg, #111) 10%, transparent); }
   .case__media img, .case__media video { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
   .case__link:hover .case__media img, .case__link:hover .case__media video { transform: scale(1.03); }
+  /* Hashtags under the cover, centered on it. Desktop: up to 2x the cover width. */
+  .case__type { max-width: 760px; text-align: center; font-size: 13px; letter-spacing: .5px; line-height: 1.5; color: var(--case-fg, #111); opacity: .7; }
   @media (max-width: 768px) {
-    .case__link { grid-template-columns: 1fr; gap: 12px; text-align: left; }
-    .case__years { text-align: left; }
+    .case__row { grid-template-columns: 1fr; gap: 8px; text-align: left; }
+    .case__title { order: 1; }
+    .case__years { order: 2; text-align: left; }
+    .case__media { order: 3; margin-top: 8px; }
+    /* Mobile: hashtag line is at most the cover width. */
+    .case__type { max-width: 380px; }
   }
 </style>

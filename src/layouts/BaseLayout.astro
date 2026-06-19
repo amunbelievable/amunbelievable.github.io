@@ -1,5 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import Header from '../components/Header.astro';
+import ContactsPopup from '../components/ContactsPopup.astro';
 import '../styles/global.css';
 
 interface Props { title?: string; description?: string; }
@@ -41,6 +43,8 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astr
     <ClientRouter />
   </head>
   <body>
+    <Header />
+    <ContactsPopup />
     <slot />
   </body>
 </html>

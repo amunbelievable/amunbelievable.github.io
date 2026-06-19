@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { resolveCaseColors } from '../../lib/colors';
+import { renderRichText } from '../../lib/richtext';
 
 export async function getStaticPaths() {
   const cases = await getCollection('cases');
@@ -50,7 +51,7 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
       <h2 class="detail__heading">{heading}</h2>
       <div class="detail__texts">
         {ordered.map((s, i) => (
-          <div class:list={['detail__text', { 'is-active': i === 0 }]} data-text={i}>{s.text}</div>
+          <div class:list={['detail__text', { 'is-active': i === 0 }]} data-text={i} set:html={renderRichText(s.text ?? '')} />
         ))}
       </div>
       <a class="detail__back" href={`/#case-${entry.id}`} data-back={entry.id}>← Назад</a>
@@ -110,8 +111,14 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
   .detail__back:hover { background: var(--case-fg, #111); color: var(--case-bg, #fff); }
 
   @media (max-width: 768px) {
-    .detail { grid-template-columns: 1fr; padding-top: 24px; }
+    .detail { grid-template-columns: 1fr; padding-top: 72px; }
     .detail__left { position: static; }
+    /* Shrink the banner ~10% (aspect-ratio preserved) so the now-present sticky header doesn't crop it. */
+    .banner { width: 90%; }
+    /* Halved arrows on mobile. */
+    .banner__nav { width: 24px; height: 24px; font-size: 15px; }
+    .banner__nav--prev { left: 8px; }
+    .banner__nav--next { right: 8px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .banner__slide { transition: none; }
@@ -151,6 +158,24 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
     root.querySelector('[data-prev]')?.addEventListener('click', () => show(idx - 1));
     root.querySelector('[data-next]')?.addEventListener('click', () => show(idx + 1));
     dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
+
+    // Swipe left/right to change slides (mobile). Horizontal intent only.
+    const banner = root.querySelector('.banner');
+    let startX = 0, startY = 0, swiping = false;
+    banner?.addEventListener('touchstart', (e) => {
+      const t = (e as TouchEvent).touches[0];
+      startX = t.clientX; startY = t.clientY; swiping = true;
+    }, { passive: true });
+    banner?.addEventListener('touchend', (e) => {
+      if (!swiping) return;
+      swiping = false;
+      const t = (e as TouchEvent).changedTouches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        show(dx < 0 ? idx + 1 : idx - 1);
+      }
+    }, { passive: true });
 
     show(0);
   }

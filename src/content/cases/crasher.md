@@ -1,6 +1,7 @@
 ---
 title: "CRASHER.MX"
 years: "Ребрендинг продукта"
+casetype: "#branding #igaming #webdesign #web-product #strategy"
 order: 2
 heading: "Бренд-менеджмент выхода на Мексику"
 bg: "#003380"

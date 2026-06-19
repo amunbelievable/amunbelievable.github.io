@@ -14,6 +14,9 @@ const cases = defineCollection({
   schema: z.object({
     title: z.string(),
     years: z.string(),
+    // Free-text tags (e.g. "#branding #igaming") shown under the cover ONLY in the
+    // homepage case preview — not on the detail page.
+    casetype: z.string().optional(),
     order: z.number(),
     heading: z.string(),
     // Per-case colors (applied to both the list block and the detail page).

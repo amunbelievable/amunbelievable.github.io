@@ -16,7 +16,7 @@ const coverOf = (c) => {
   {cases.map((c) => {
     const colors = resolveCaseColors(c.data.bg, c.data.fg);
     return (
-      <CaseRow slug={c.id} title={c.data.title} years={c.data.years} cover={coverOf(c)} bg={colors.bg} fg={colors.fg} />
+      <CaseRow slug={c.id} title={c.data.title} years={c.data.years} casetype={c.data.casetype} cover={coverOf(c)} bg={colors.bg} fg={colors.fg} />
     );
   })}
 </div>
