@@ -23,13 +23,22 @@
 <script>
   import { shouldShowPreloader } from '../lib/preloader';
   import { resolveTargetCase } from '../lib/scroll-restore';
+  import { lockScrollTo } from '../lib/scroll-lock';
 
   function restoreScroll() {
-    const target = resolveTargetCase(location.hash, sessionStorage.getItem('lastCase'));
-    if (!target) return;
-    const el = document.getElementById(`case-${target}`);
-    if (el) el.scrollIntoView({ behavior: 'auto' });
-    sessionStorage.removeItem('lastCase');
+    const target = resolveTargetCase(location.hash);
+    if (target) {
+      // Returning to a case via the "Назад" button's "#case-…" hash.
+      const el = document.getElementById(`case-${target}`);
+      if (el) el.scrollIntoView({ behavior: 'auto' });
+      return;
+    }
+    // No case anchor. On the home page (only place with a #hero) this is the
+    // hero entry point — force and hold the top: iOS Safari otherwise restores
+    // a previous scroll position (e.g. the footer) on reload, and ClientRouter's
+    // own scroll handling is unreliable on repeat home navigations. Detail pages
+    // load at the top on their own, so we leave them alone.
+    if (document.getElementById('hero')) lockScrollTo(0);
   }
 
   function runPreloader() {

@@ -34,14 +34,4 @@ const coverOf = (c) => {
     items.forEach((el) => io.observe(el));
   }
   document.addEventListener('astro:page-load', initReveal);
-
-  function rememberOnClick() {
-    document.querySelectorAll('[data-case-link]').forEach((el) => {
-      el.addEventListener('click', () => {
-        const slug = el.getAttribute('data-case-link');
-        if (slug) sessionStorage.setItem('lastCase', slug);
-      });
-    });
-  }
-  document.addEventListener('astro:page-load', rememberOnClick);
 </script>

@@ -190,15 +190,5 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
     show(0);
   }
 
-  function rememberOnLeave() {
-    document.querySelectorAll('[data-back]').forEach((el) => {
-      el.addEventListener('click', () => {
-        const slug = (el as HTMLElement).dataset.back;
-        if (slug) sessionStorage.setItem('lastCase', slug);
-      });
-    });
-  }
-
   document.addEventListener('astro:page-load', initCarousel);
-  document.addEventListener('astro:page-load', rememberOnLeave);
 </script>

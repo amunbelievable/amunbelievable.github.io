@@ -19,6 +19,11 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astr
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Take over scroll restoration BEFORE the browser restores a saved
+         position. Without this, a reload restores the previous (footer)
+         scroll position before any other script runs. Inline + early so it
+         wins the race; ClientRouter also relies on manual restoration. -->
+    <script is:inline>history.scrollRestoration = 'manual';</script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
