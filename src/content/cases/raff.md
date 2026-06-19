@@ -1,7 +1,7 @@
 ---
 title: "RAFFAELLO"
 years: "SMM-Спецпроект"
-order: 10
+order: 11
 heading: "Кампания #КакЛюбитеВы"
 bg: "#EDBFC9"
 slides:
