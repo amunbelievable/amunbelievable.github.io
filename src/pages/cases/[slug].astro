@@ -19,8 +19,8 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
   <div class="detail-page" style={`--case-bg:${colors.bg};--case-fg:${colors.fg};`}>
   <article class="detail" data-carousel>
     <div class="detail__head">
-      <p class="detail__years">{years}</p>
       <h1 class="detail__title">{title}</h1>
+      <p class="detail__years">{years}</p>
     </div>
 
     <div class="detail__left">
@@ -73,10 +73,10 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
     display: grid; grid-template-columns: 1fr 1fr;
     grid-template-areas: "media head" "media body";
     gap: 12px var(--space); max-width: var(--maxw); margin: 0 auto;
-    padding: 88px var(--space) var(--space); align-items: start;
+    padding: 28px var(--space) var(--space); align-items: start;
   }
   .detail__head { grid-area: head; }
-  .detail__left { grid-area: media; position: sticky; top: 88px; }
+  .detail__left { grid-area: media; position: sticky; top: 80px; }
   .detail__body { grid-area: body; }
 
   .banner {
@@ -111,8 +111,8 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
   .dot { width: 9px; height: 9px; padding: 0; border-radius: 50%; border: 1px solid var(--case-fg, #111); background: transparent; cursor: pointer; transition: background .2s ease; }
   .dot.is-active { background: var(--case-fg, #111); }
 
-  .detail__years { color: var(--case-fg, #111); opacity: .6; letter-spacing: 1px; }
-  .detail__title { font-size: clamp(28px, 4vw, 44px); font-weight: 600; margin-top: 6px; }
+  .detail__title { font-size: clamp(28px, 4vw, 44px); font-weight: 600; }
+  .detail__years { color: var(--case-fg, #111); opacity: .6; letter-spacing: 1px; margin-top: 6px; }
   .detail__heading { font-size: 18px; font-weight: 500; color: var(--case-fg, #111); opacity: .65; margin-top: 8px; }
   .detail__texts { margin-top: 28px; }
   .detail__text { display: none; white-space: pre-line; line-height: 1.75; }
@@ -121,7 +121,7 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
   .detail__back:hover { background: var(--case-fg, #111); color: var(--case-bg, #fff); }
 
   @media (max-width: 768px) {
-    .detail { grid-template-columns: 1fr; grid-template-areas: "head" "media" "body"; padding-top: 72px; }
+    .detail { grid-template-columns: 1fr; grid-template-areas: "head" "media" "body"; padding-top: 16px; }
     .detail__left { position: static; }
     /* Shrink the banner ~10% (aspect-ratio preserved) so the now-present sticky header doesn't crop it. */
     .banner { width: 90%; }
