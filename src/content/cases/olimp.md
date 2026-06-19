@@ -2,7 +2,7 @@
 title: "OLIMPBET x okko"
 years: "Эксклюзивное спонсорство"
 casetype: "#branding #igaming #webdesign #web-product #strategy"
-order: 8
+order: 7
 heading: "Бренд-менеджмент выхода на Мексику"
 bg: "#FF190A"
 fg: "white"
