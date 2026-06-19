@@ -1,7 +1,7 @@
 ---
 title: "PUNCH.BET"
 years: "Welcome-бонус"
-order: 6
+order: 7
 heading: "Релиз и продвижение нового welcome-бонуса"
 bg: "#CCFF66"
 slides:
