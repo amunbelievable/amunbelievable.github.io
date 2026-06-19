@@ -5,7 +5,7 @@ order: 3
 heading: "Новая айдентика официальной партнерки ChampionSlots"
 bg: "#EFC0FF"
 slides:
-  - src: "/cases/chmppart0/chmppart0.webp" 
+  - src: "/cases/chmppart/chmppart0.webp" 
     type: "image"
     order: 1
     text: |
@@ -20,7 +20,7 @@ slides:
       
       ИТОГ:
       Повышение уровня доверия со стороны баерских команд (по результатом глубинных опросов). Рост количества партнерских контактов на 40%, увеличение качественного аффилиейт-трафика на 60%.
-  - src: "/cases/chmppart0/chmppart1.webp"
+  - src: "/cases/chmppart/chmppart1.webp"
     type: "image"
     order: 2
     text: |
@@ -35,7 +35,7 @@ slides:
       
       ИТОГ:
       Повышение уровня доверия со стороны баерских команд (по результатом глубинных опросов). Рост количества партнерских контактов на 40%, увеличение качественного аффилиейт-трафика на 60%.
-  - src: "/cases/chmppart0/chmppart2.webp"
+  - src: "/cases/chmppart/chmppart2.webp"
     type: "image"
     order: 3
     text: |
@@ -50,7 +50,7 @@ slides:
       
       ИТОГ:
       Повышение уровня доверия со стороны баерских команд (по результатом глубинных опросов). Рост количества партнерских контактов на 40%, увеличение качественного аффилиейт-трафика на 60%.
-  - src: "/cases/chmppart0/chmppart3.webp"
+  - src: "/cases/chmppart/chmppart3.webp"
     type: "image"
     order: 4
     text: |
@@ -65,7 +65,7 @@ slides:
       
       ИТОГ:
       Повышение уровня доверия со стороны баерских команд (по результатом глубинных опросов). Рост количества партнерских контактов на 40%, увеличение качественного аффилиейт-трафика на 60%.
-  - src: "/cases/chmppart0/chmppart4.webp"
+  - src: "/cases/chmppart/chmppart4.webp"
     type: "image"
     order: 5
     text: |
@@ -80,7 +80,7 @@ slides:
       
       ИТОГ:
       Повышение уровня доверия со стороны баерских команд (по результатом глубинных опросов). Рост количества партнерских контактов на 40%, увеличение качественного аффилиейт-трафика на 60%.
-  - src: "/cases/chmppart0/chmppart5.webp"
+  - src: "/cases/chmppart/chmppart5.webp"
     type: "image"
     order: 6
     text: |
@@ -95,7 +95,7 @@ slides:
       
       ИТОГ:
       Повышение уровня доверия со стороны баерских команд (по результатом глубинных опросов). Рост количества партнерских контактов на 40%, увеличение качественного аффилиейт-трафика на 60%.
-  - src: "/cases/chmppart0/chmppart6.webp"
+  - src: "/cases/chmppart/chmppart6.webp"
     type: "image"
     order: 7
     text: |
