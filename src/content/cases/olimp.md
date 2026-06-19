@@ -4,6 +4,7 @@ years: "Эксклюзивное спонсорство"
 order: 8
 heading: "Бренд-менеджмент выхода на Мексику"
 bg: "#FF190A"
+fg: "white"
 slides:
   - src: "/cases/olimp/olimp0.webp"
     type: "image"
