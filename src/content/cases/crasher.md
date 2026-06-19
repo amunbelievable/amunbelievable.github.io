@@ -1,7 +1,7 @@
 ---
 title: "CRASHER.MX"
 years: "Ребрендинг продукта"
-order: 5
+order: 2
 heading: "Бренд-менеджмент выхода на Мексику"
 bg: "#003380"
 slides:
