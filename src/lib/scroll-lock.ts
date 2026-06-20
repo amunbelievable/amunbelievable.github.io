@@ -45,14 +45,19 @@ export function lockScrollTo(targetY: number, holdMs = 600): void {
   root.style.scrollSnapType = 'none';
   root.style.scrollBehavior = 'auto';
 
-  // Restore snap on the user's next touch (a fresh gesture), or on navigation.
-  const onTouch = () => endHold();
+  // Restore snap on the user's next scroll gesture (a fresh start), or on
+  // navigation. On iOS that gesture is `touchstart` (which also clears the
+  // stale deferred snap — the whole reason for the touch trigger). Desktop
+  // never fires touchstart, so also listen for `wheel`/`keydown`; otherwise
+  // snap-type stays 'none' forever and the document loses its scroll-snap.
+  const restoreEvents = ['touchstart', 'wheel', 'keydown'] as const;
+  const onGesture = () => endHold();
   teardown = () => {
-    window.removeEventListener('touchstart', onTouch);
+    restoreEvents.forEach((e) => window.removeEventListener(e, onGesture));
     root.style.scrollBehavior = prevBehavior;
     root.style.scrollSnapType = prevSnap; // '' → falls back to CSS (mandatory)
   };
-  window.addEventListener('touchstart', onTouch, { passive: true });
+  restoreEvents.forEach((e) => window.addEventListener(e, onGesture, { passive: true }));
 
   // Hold the target briefly, re-asserting each frame. This defeats iOS's
   // post-reload scroll restoration (a separate mechanism from snap that fires
