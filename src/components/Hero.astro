@@ -3,7 +3,12 @@ const bio =
   'Креативный лидер с 11+ годами опыта в разработке бренд-стратегий, 360-кампаний и web-продуктов. Наибольшая экспертиза - в iGaming и Affiliate. Этот лендинг-портфолио сделан методом вайб-кодинга и является демонстрацией моего опыта. Приятного просмотра!';
 ---
 <section id="hero" class="hero">
-  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__bg" aria-hidden="true">
+    <span class="hero__blob hero__blob--1"></span>
+    <span class="hero__blob hero__blob--2"></span>
+    <span class="hero__blob hero__blob--3"></span>
+    <span class="hero__blob hero__blob--4"></span>
+  </div>
   <div class="hero__card">
     <img class="hero__avatar" src="/hero/avatar.webp" alt="Антон Малаховский" width="168" height="168" />
     <h1 class="hero__name">Антон Малаховский</h1>
@@ -16,8 +21,57 @@ const bio =
 <style>
   .hero { position: relative; min-height: 100svh; display: grid; place-items: center; text-align: center; overflow: hidden; scroll-snap-align: start; padding: var(--space); }
   .hero__bg {
-    position: absolute; inset: 0;
-    background: #f3f0e8 url('/hero/main.webp') center/cover no-repeat;
+    position: absolute; inset: 0; overflow: hidden;
+    background: var(--aurora-bg);
+    /* ── Параметры «живой авроры» (крути здесь) ── */
+    --aurora-bg: #efe9f2;     /* база под пятнами */
+    --aurora-c1: #b14cff;     /* фиолетовый */
+    --aurora-c2: #3aa0ff;     /* синий */
+    --aurora-c3: #ff3d6e;     /* розовый */
+    --aurora-c4: #19d3b5;     /* бирюза */
+    --aurora-speed: 1;        /* множитель скорости: >1 медленнее, <1 быстрее */
+    --aurora-blur: 60px;      /* мягкость пятен */
+    --aurora-size: 62%;       /* размер пятна */
+  }
+  .hero__blob {
+    position: absolute; width: var(--aurora-size); aspect-ratio: 1; border-radius: 50%;
+    filter: blur(var(--aurora-blur)); will-change: transform;
+    animation-timing-function: ease-in-out; animation-iteration-count: infinite;
+  }
+  /* Длительности взаимно простые (23/29/31/37с) — композиция пятен
+     никогда визуально не зацикливается (органика без JS). */
+  .hero__blob--1 { background: var(--aurora-c1); left: -8%;   top: -10%;    animation-name: aurora-1; animation-duration: calc(23s * var(--aurora-speed)); }
+  .hero__blob--2 { background: var(--aurora-c2); right: -10%; top: -6%;     animation-name: aurora-2; animation-duration: calc(29s * var(--aurora-speed)); }
+  .hero__blob--3 { background: var(--aurora-c3); right: -6%;  bottom: -14%; animation-name: aurora-3; animation-duration: calc(31s * var(--aurora-speed)); }
+  .hero__blob--4 { background: var(--aurora-c4); left: -10%;  bottom: -10%; animation-name: aurora-4; animation-duration: calc(37s * var(--aurora-speed)); }
+
+  /* Каждое пятно блуждает по своей кривой (не «маятник»). */
+  @keyframes aurora-1 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    25%     { transform: translate(22%, 12%) scale(1.1); }
+    50%     { transform: translate(30%, 26%) scale(1.18); }
+    75%     { transform: translate(10%, 20%) scale(1.07); }
+  }
+  @keyframes aurora-2 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    25%     { transform: translate(-18%, 14%) scale(1.08); }
+    50%     { transform: translate(-26%, 26%) scale(1.14); }
+    75%     { transform: translate(-12%, 10%) scale(1.05); }
+  }
+  @keyframes aurora-3 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    25%     { transform: translate(-14%, -16%) scale(1.1); }
+    50%     { transform: translate(-24%, -26%) scale(1.2); }
+    75%     { transform: translate(-8%, -12%) scale(1.06); }
+  }
+  @keyframes aurora-4 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    25%     { transform: translate(16%, -12%) scale(1.07); }
+    50%     { transform: translate(26%, -22%) scale(1.14); }
+    75%     { transform: translate(12%, -8%) scale(1.05); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__blob { animation: none; }
   }
   .hero__card {
     position: relative; z-index: 1; width: 100%; max-width: 460px;
@@ -36,3 +90,22 @@ const bio =
     .hero__avatar { width: 132px; height: 132px; }
   }
 </style>
+
+<script>
+  // Optional polish: randomise each blob's phase + nudge its speed so the
+  // aurora looks different on every visit and never settles into a visible
+  // loop. Pure progressive enhancement — without JS the CSS already animates;
+  // skipped entirely when the user prefers reduced motion.
+  function initAurora() {
+    const bg = document.querySelector('.hero__bg');
+    if (!bg) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    bg.querySelectorAll<HTMLElement>('.hero__blob').forEach((b) => {
+      const base = parseFloat(getComputedStyle(b).animationDuration) || 24; // honours --aurora-speed
+      const dur = base * (0.85 + Math.random() * 0.3);                      // ±15% jitter
+      b.style.animationDuration = `${dur.toFixed(2)}s`;
+      b.style.animationDelay = `-${(Math.random() * dur).toFixed(2)}s`;     // random starting phase
+    });
+  }
+  document.addEventListener('astro:page-load', initAurora);
+</script>
