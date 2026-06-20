@@ -3,10 +3,10 @@ const base = import.meta.env.BASE_URL;
 ---
 <header class="header">
   <div class="header__inner container">
-    <a class="header__home" href={base} data-home aria-label="На главную, к разделу hero">
+    <div class="header__brand">
       <img class="header__logo" src={`${base}favicon.png`} alt="Антон Малаховский" width="32" height="32" />
       <span class="header__name">Антон Малаховский</span>
-    </a>
+    </div>
     <button id="contacts-open" class="header__contacts" type="button">Контакты</button>
   </div>
 </header>
@@ -18,7 +18,7 @@ const base = import.meta.env.BASE_URL;
     border-bottom: 1px solid var(--line);
   }
   .header__inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-  .header__home { display: inline-flex; align-items: center; gap: 10px; }
+  .header__brand { display: inline-flex; align-items: center; gap: 10px; }
   .header__logo { display: none; width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
   .header__name { font-size: 14px; letter-spacing: 1px; }
   .header__contacts {
@@ -32,33 +32,3 @@ const base = import.meta.env.BASE_URL;
     .header__logo { display: block; }
   }
 </style>
-
-<script>
-  import { lockScrollTo } from '../lib/scroll-lock';
-
-  // Unified "go to hero / top" used by the header home link ([data-home]) and the
-  // footer "Наверх" button ([data-scroll-top]).
-  function goHero(e: Event) {
-    const hero = document.getElementById('hero');
-    if (!hero) {
-      // Detail page: no hero here. Let ClientRouter navigate home via the
-      // link's href (a SPA swap, NOT a document reload). The home page-load
-      // then runs restoreScroll(), which lockScrollTo(0)'s us onto the hero.
-      // A full reload here would let iOS Safari restore the home page's saved
-      // scroll position instead (it ignores scrollRestoration='manual').
-      return;
-    }
-    e.preventDefault();
-    // Drop any lingering "#case-…" hash so a later reload won't restore a case.
-    history.replaceState(null, '', location.pathname + location.search);
-    lockScrollTo(0);
-  }
-
-  function initHome() {
-    document.querySelectorAll('[data-home], [data-scroll-top]').forEach((el) => {
-      el.addEventListener('click', goHero);
-    });
-  }
-
-  document.addEventListener('astro:page-load', initHome);
-</script>

@@ -11,9 +11,10 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* `mandatory` gives the "one case per screen" snap. It used to fight the
-   programmatic jump-to-top (made "наверх" bounce back), but goHero now turns
-   snap off for the duration of that instant jump, so mandatory is safe. */
+/* `mandatory` gives the "one case per screen" snap. The only programmatic
+   jump-to-top left is Preloader's restoreScroll() on home reload, and it uses
+   lockScrollTo() to turn snap off for the duration of that instant jump, so
+   mandatory is safe. */
 html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
 
 body {
