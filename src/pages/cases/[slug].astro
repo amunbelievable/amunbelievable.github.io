@@ -25,15 +25,17 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
 
     <div class="detail__left">
       <div class="banner">
-        {ordered.map((s, i) => (
-          <div class:list={['banner__slide', { 'is-active': i === 0 }]} data-slide={i}>
-            {s.type === 'video' ? (
-              <video data-video src={s.src} loop muted playsinline preload="metadata"></video>
-            ) : (
-              <img src={s.src} alt={`${title} — ${i + 1}`} />
-            )}
-          </div>
-        ))}
+        <div class="banner__track" data-track>
+          {ordered.map((s, i) => (
+            <div class:list={['banner__slide', { 'is-active': i === 0 }]} data-slide={i}>
+              {s.type === 'video' ? (
+                <video data-video src={s.src} loop muted playsinline preload="metadata"></video>
+              ) : (
+                <img src={s.src} alt={`${title} — ${i + 1}`} />
+              )}
+            </div>
+          ))}
+        </div>
         {multi && (
           <button class="banner__nav banner__nav--prev" data-prev type="button" aria-label="Предыдущий слайд">‹</button>
         )}
@@ -84,12 +86,11 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
     aspect-ratio: 16 / 25; max-height: 78vh;
     border-radius: 10px; overflow: hidden;
     background: color-mix(in srgb, var(--case-fg, #111) 8%, transparent);
+    /* JS owns horizontal swipe; let vertical page scroll pass through. */
+    touch-action: pan-y;
   }
-  .banner__slide {
-    position: absolute; inset: 0; display: grid; place-items: center;
-    opacity: 0; visibility: hidden; transition: opacity .4s ease;
-  }
-  .banner__slide.is-active { opacity: 1; visibility: visible; }
+  .banner__track { display: flex; width: 100%; height: 100%; transition: transform .4s ease; will-change: transform; }
+  .banner__slide { flex: 0 0 100%; width: 100%; height: 100%; display: grid; place-items: center; }
   .banner__slide img, .banner__slide video { width: 100%; height: 100%; object-fit: cover; }
 
   .banner__nav {
@@ -131,7 +132,7 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
     .banner__nav--next { right: 8px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .banner__slide { transition: none; }
+    .banner__track { transition: none; }
   }
 </style>
 
@@ -139,21 +140,23 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
   function initCarousel() {
     const root = document.querySelector('[data-carousel]');
     if (!root) return;
+    const track = root.querySelector('[data-track]') as HTMLElement | null;
+    const banner = root.querySelector('.banner') as HTMLElement | null;
     const slides = Array.from(root.querySelectorAll('.banner__slide'));
     const texts = Array.from(root.querySelectorAll('.detail__text'));
     const dots = Array.from(root.querySelectorAll('[data-dot]'));
     const total = slides.length;
-    if (!total) return;
+    if (!track || !total) return;
 
     let idx = 0;
-    function show(n) {
-      idx = ((n % total) + total) % total;
+
+    function paint() {
       slides.forEach((s, i) => {
         const active = i === idx;
         s.classList.toggle('is-active', active);
-        const v = s.querySelector('video');
+        const v = s.querySelector('video') as HTMLVideoElement | null;
         if (v) {
-          if (active) { v.play().catch(() => {}); }
+          if (active) { v.muted = true; v.play().catch(() => {}); }
           else { v.pause(); try { v.currentTime = 0; } catch {} }
         }
       });
@@ -164,30 +167,58 @@ const colors = resolveCaseColors(entry.data.bg, entry.data.fg);
         d.setAttribute('aria-current', active ? 'true' : 'false');
       });
     }
+    function go(n: number) {
+      idx = ((n % total) + total) % total;
+      track!.style.transition = '';
+      track!.style.transform = `translateX(${-idx * 100}%)`;
+      paint();
+    }
 
-    root.querySelector('[data-prev]')?.addEventListener('click', () => show(idx - 1));
-    root.querySelector('[data-next]')?.addEventListener('click', () => show(idx + 1));
-    dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
+    root.querySelector('[data-prev]')?.addEventListener('click', () => go(idx - 1));
+    root.querySelector('[data-next]')?.addEventListener('click', () => go(idx + 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
 
-    // Swipe left/right to change slides (mobile). Horizontal intent only.
-    const banner = root.querySelector('.banner');
-    let startX = 0, startY = 0, swiping = false;
+    // Finger-following swipe (mobile): the track tracks the finger, then snaps.
+    let startX = 0, startY = 0, dragging = false, decided = false, horiz = false, width = 1;
     banner?.addEventListener('touchstart', (e) => {
       const t = (e as TouchEvent).touches[0];
-      startX = t.clientX; startY = t.clientY; swiping = true;
+      startX = t.clientX; startY = t.clientY;
+      dragging = true; decided = false; horiz = false;
+      width = banner.clientWidth || 1;
     }, { passive: true });
-    banner?.addEventListener('touchend', (e) => {
-      if (!swiping) return;
-      swiping = false;
-      const t = (e as TouchEvent).changedTouches[0];
+    banner?.addEventListener('touchmove', (e) => {
+      if (!dragging) return;
+      const t = (e as TouchEvent).touches[0];
       const dx = t.clientX - startX;
       const dy = t.clientY - startY;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
-        show(dx < 0 ? idx + 1 : idx - 1);
+      if (!decided) {
+        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+          decided = true;
+          horiz = Math.abs(dx) > Math.abs(dy);
+          if (horiz) track!.style.transition = 'none';
+          else dragging = false; // vertical scroll — don't hijack
+        }
       }
+      if (horiz) {
+        e.preventDefault(); // own the horizontal gesture (non-passive)
+        const pct = (dx / width) * 100;
+        track!.style.transform = `translateX(${-idx * 100 + pct}%)`;
+      }
+    }, { passive: false });
+    banner?.addEventListener('touchend', (e) => {
+      if (!dragging || !horiz) { dragging = false; return; }
+      dragging = false;
+      const dx = (e as TouchEvent).changedTouches[0].clientX - startX;
+      track!.style.transition = '';
+      if (Math.abs(dx) > width * 0.2) { go(dx < 0 ? idx + 1 : idx - 1); }
+      else { track!.style.transform = `translateX(${-idx * 100}%)`; } // snap back
     }, { passive: true });
 
-    show(0);
+    // Initial position without animation.
+    track.style.transition = 'none';
+    track.style.transform = 'translateX(0%)';
+    paint();
+    requestAnimationFrame(() => { if (track) track.style.transition = ''; });
   }
 
   document.addEventListener('astro:page-load', initCarousel);
