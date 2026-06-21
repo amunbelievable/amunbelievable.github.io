@@ -51,5 +51,30 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astr
     <Header />
     <ContactsPopup />
     <slot />
+    <script>
+      // A forward SPA navigation to a fresh page must open at the top.
+      // ClientRouter's own scroll reset is suppressed by
+      // history.scrollRestoration='manual' (set above for the home preloader),
+      // so without this a case detail page inherits the home page's scroll
+      // position and opens scrolled down. Reset explicitly — but skip the two
+      // cases the preloader already positions: the home #hero page, and a
+      // "#case-…" return-to-case navigation.
+      function resetScrollOnSwap() {
+        if (location.hash.startsWith('#case-')) return;
+        if (document.getElementById('hero')) return;
+        // Jump (not smooth) and override scroll-behavior so the global
+        // `scroll-behavior: smooth` doesn't animate — and so a late
+        // ClientRouter scroll restore can't win over us.
+        const root = document.documentElement;
+        const prev = root.style.scrollBehavior;
+        root.style.scrollBehavior = 'auto';
+        window.scrollTo(0, 0);
+        root.style.scrollBehavior = prev;
+      }
+      // after-swap = before paint (no flash); page-load = after ClientRouter's
+      // own scroll handling (wins if after-swap fired too early).
+      document.addEventListener('astro:after-swap', resetScrollOnSwap);
+      document.addEventListener('astro:page-load', resetScrollOnSwap);
+    </script>
   </body>
 </html>
