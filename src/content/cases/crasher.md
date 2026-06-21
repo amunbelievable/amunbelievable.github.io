@@ -1,9 +1,9 @@
 ---
 title: "CRASHER.MX"
 years: "Ребрендинг продукта"
-casetype: "#igaming #rebranding #web_design #web_product #strategy #CRM #SMM"
+casetype: "#igaming #brand_management #rebranding #web_design #web_product #strategy #SMM"
 order: 2
-heading: "Бренд-менеджмент выхода на Мексику"
+heading: "Бренд-менеджмент Мексиканского легального казино"
 bg: "#003380"
 slides:
   - src: "/cases/crasher/crasher0.webp"
