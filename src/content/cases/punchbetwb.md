@@ -1,7 +1,7 @@
 ---
 title: "PUNCH.BET"
 years: "Welcome-бонус"
-casetype: "#branding #igaming #webdesign #web-product #strategy"
+casetype: "#igaming #b2c_product #bonus_management #web_design #web_product #strategy #360_campaign #SMM #CRM"
 order: 8
 heading: "Релиз и продвижение нового welcome-бонуса"
 bg: "#CCFF66"

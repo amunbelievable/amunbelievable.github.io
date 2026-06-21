@@ -1,7 +1,7 @@
 ---
 title: "PUNCH.BET"
 years: "Айдентика бренда"
-casetype: "#branding #igaming #webdesign #web-product #strategy"
+casetype: "#igaming #branding #strategy #web_design #web_product #content #startup_release"
 order: 1
 heading: "Создание айдентики нового продукта и курирование разработки"
 bg: "#BA00E5"

@@ -1,7 +1,7 @@
 ---
 title: "RAFFAELLO"
 years: "SMM-Спецпроект"
-casetype: "#branding #igaming #webdesign #web-product #strategy"
+casetype: "#FMCG #web_design #web_product #SMM"
 order: 11
 heading: "Кампания #КакЛюбитеВы"
 bg: "#EDBFC9"

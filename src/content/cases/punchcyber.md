@@ -1,7 +1,7 @@
 ---
 title: "PUNCH.BET"
 years: "Киберспортивный дизайн"
-casetype: "#branding #igaming #webdesign #web-product #strategy"
+casetype: "#igaming #b2c_product #bonus_management #web_design #web_product #360_campaign #SMM #CRM"
 order: 9
 heading: "Брендинг раздела ставок на киберспорт: продукт, баннеры, перфоманс"
 bg: "#FF683A"

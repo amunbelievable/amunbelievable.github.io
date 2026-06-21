@@ -1,7 +1,7 @@
 ---
 title: "CHAMPIONSLOTS"
 years: "Релиз спорт-бонусов"
-casetype: "#branding #igaming #webdesign #web-product #strategy"
+casetype: "#igaming #branding #web_design #web_product #strategy #CRM #SMM #360_campaign"
 order: 5
 heading: "Дизайн и контроль разработки спорт-бонусов казино"
 bg: "#43027D"
