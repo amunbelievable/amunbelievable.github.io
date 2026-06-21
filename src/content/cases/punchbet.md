@@ -2,7 +2,7 @@
 title: "PUNCH.BET"
 years: "Айдентика бренда"
 casetype: "#branding #igaming #webdesign #web-product #strategy"
-order: 4
+order: 1
 heading: "Создание айдентики нового продукта и курирование разработки"
 bg: "#BA00E5"
 slides:
@@ -51,7 +51,7 @@ slides:
 
       ИТОГ:
       бренд набрал 20,000 активных пользователей за 1й год работы.
-  - src: "/cases/punchbet/punch06.webp"
+  - src: "/cases/punchbet/punch04.webp"
     type: "image"
     order: 4
     text: |
@@ -66,7 +66,7 @@ slides:
 
       ИТОГ:
       бренд набрал 20,000 активных пользователей за 1й год работы.
-  - src: "/cases/punchbet/punch03.webp"
+  - src: "/cases/punchbet/punch02.webp"
     type: "image"
     order: 5
     text: |
@@ -96,7 +96,7 @@ slides:
 
       ИТОГ:
       бренд набрал 20,000 активных пользователей за 1й год работы.
-  - src: "/cases/punchbet/punch08.webp"
+  - src: "/cases/punchbet/punch06.webp"
     type: "image"
     order: 7
     text: |
@@ -111,7 +111,7 @@ slides:
 
       ИТОГ:
       бренд набрал 20,000 активных пользователей за 1й год работы.
-  - src: "/cases/punchbet/punch09.webp"
+  - src: "/cases/punchbet/punch07.webp"
     type: "image"
     order: 8
     text: |
@@ -126,7 +126,7 @@ slides:
 
       ИТОГ:
       бренд набрал 20,000 активных пользователей за 1й год работы.
-  - src: "/cases/punchbet/punch04.webp"
+  - src: "/cases/punchbet/punch08.webp"
     type: "image"
     order: 9
     text: |
@@ -141,9 +141,24 @@ slides:
 
       ИТОГ:
       бренд набрал 20,000 активных пользователей за 1й год работы.
-  - src: "/cases/punchbet/pi1.webp"
+  - src: "/cases/punchbet/punch03.webp"
     type: "image"
     order: 10
+    text: |
+      ЗАДАЧА:
+      Разработка айдентики WEB-продукта, акционных страниц, баннеров, UX/UI-решений, лендингов-регистраций, локализация креативов и тёрмсов на 7 GEO Tier-2/3.
+
+      ИНСАЙТ:
+      Опора на молодую ЦА и киберспорт и современный ToV помогут завоевать нишу.
+
+      РЕШЕНИЕ:
+      Особый стиль бренда, отличающийся современным дизайном, молодёжным задором, общением с игроками на их языке. Концепция получила слоган «True betting vibe»: он отражал наш подход к оформлению сайта и коммуникации и не требовал перевода на другие языки в силу простоты и понятности.
+
+      ИТОГ:
+      бренд набрал 20,000 активных пользователей за 1й год работы.
+  - src: "/cases/punchbet/pi1.webp"
+    type: "image"
+    order: 11
     text: |
       ЗАДАЧА:
       Разработка айдентики WEB-продукта, акционных страниц, баннеров, UX/UI-решений, лендингов-регистраций, локализация креативов и тёрмсов на 7 GEO Tier-2/3.

@@ -2,7 +2,7 @@
 title: "DESERCOM"
 years: "Создание сайта"
 casetype: "#branding #igaming #webdesign #web-product #strategy"
-order: 1
+order: 4
 heading: "Концепт «Медиабаинг нового поколения»"
 bg: "#101010"
 slides:
