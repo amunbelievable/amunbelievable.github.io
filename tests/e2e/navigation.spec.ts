@@ -6,7 +6,7 @@ test('open a case and return to its position via Назад', async ({ page }) =
 
   await page.locator('[data-case-link="crasher"]').click();
   await expect(page).toHaveURL(/\/cases\/crasher\/?$/);
-  await expect(page.getByRole('heading', { name: /Бренд-менеджмент выхода на Мексику/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /CRASHER\.MX/i })).toBeVisible();
 
   await page.getByRole('link', { name: /назад/i }).click();
   await expect(page).toHaveURL(/\/(#case-crasher)?$/);

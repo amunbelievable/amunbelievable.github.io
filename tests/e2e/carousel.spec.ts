@@ -9,7 +9,7 @@ test('case detail carousel switches slides (media + text)', async ({ page }) => 
   // Slide 1 active by default
   await expect(t0).toBeVisible();
   await expect(t1).toBeHidden();
-  await expect(page.locator('[data-dot]')).toHaveCount(10);
+  await expect(page.locator('[data-dot]')).toHaveCount(11);
   await expect(page.locator('.banner__slide.is-active')).toHaveCount(1);
 
   // Next -> slide 2 (its own text becomes visible, slide 1 hidden)
@@ -27,7 +27,7 @@ test('case detail carousel switches slides (media + text)', async ({ page }) => 
 test('casetype hashtags show on homepage preview but not on the detail page', async ({ page }) => {
   await page.goto('/');
   await page.locator('#preloader').waitFor({ state: 'hidden' }).catch(() => {});
-  await expect(page.locator('#case-punchbet .case__type')).toContainText('#branding');
+  await expect(page.locator('#case-punchbet .case__type')).toContainText('#igaming');
 
   await page.goto('/cases/punchbet/');
   await expect(page.locator('.case__type')).toHaveCount(0);
