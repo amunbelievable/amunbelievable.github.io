@@ -5,6 +5,7 @@ casetype: "#affiliate #telegram_miniapp #design #web_product #merch #HR"
 order: 11
 heading: "Создание мерч-пака и системы внутренней мотивации сотрудников"
 bg: "#EF3340"
+fg: "white"
 slides:
   - src: "/cases/dsrcmmerch/dsrcmmerch0.webp"
     type: "image"

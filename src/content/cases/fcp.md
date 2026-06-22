@@ -2,7 +2,7 @@
 title: "FIRSTCLASS PARTNERS"
 years: "Айдентика и релиз стартапа"
 casetype: "#affiliate #branding #web_design #web_product #strategy #startup_release #SMM"
-order: 6
+order: 9
 heading: "Концепция «Твой первоклассный партнер»"
 bg: "#004AE8"
 slides:
