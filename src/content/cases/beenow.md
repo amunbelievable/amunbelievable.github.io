@@ -1,9 +1,9 @@
 ---
 title: "БИЛАЙН.NOW"
 years: "Фирменный стиль B2B"
-casetype: "#telecom #branding #design #b2b_strategy #SMM #media"
-order: 12
-heading: "Создание нового дизайна b2b-коммуникаций Билайн"
+casetype: "#telecom #branding #design #B2B_strategy #SMM #media"
+order: 10
+heading: "Создание нового дизайна B2B-коммуникаций Билайн"
 bg: "#FDD91F"
 slides:
   - src: "/cases/beenow/beenow0.webp"

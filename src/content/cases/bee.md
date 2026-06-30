@@ -2,7 +2,7 @@
 title: "БИЛАЙН"
 years: "Спецпроект"
 casetype: "#telecom #web_product #web_design #360_campaign #SMM"
-order: 10
+order: 6
 heading: "Кампания #МирноеНебо75"
 bg: "#FFD42E"
 slides:

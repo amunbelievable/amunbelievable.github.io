@@ -2,8 +2,8 @@
 title: "DESERCOM"
 years: "Корпоративный mini-app и мерч"
 casetype: "#affiliate #telegram_miniapp #design #web_product #merch #HR"
-order: 11
-heading: "Создание мерч-пака и системы внутренней мотивации сотрудников"
+order: 5
+heading: "Создание технологичной системы внутренней мотивации сотрудников"
 bg: "#EF3340"
 fg: "white"
 slides:

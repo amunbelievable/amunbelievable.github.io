@@ -2,8 +2,8 @@
 title: "OLIMPBET x okko"
 years: "Эксклюзивное спонсорство"
 casetype: "#igaming #sponsorship #co_branding #web_design #web_product #360_campaign #TV_production"
-order: 4
-heading: "Бренд-менеджмент эксклюзивного спонсорства АПЛ"
+order: 3
+heading: "Бренд-менеджмент спонсорства трансляций АПЛ на okko"
 bg: "#FF190A"
 fg: "white"
 slides:
